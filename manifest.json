@@ -1,0 +1,9 @@
+{
+  "name": "P2P Solar Microgrid",
+  "short_name": "Microgrid",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#1abc9c",
+  "background_color": "#141e30",
+  "orientation": "portrait"
+}
