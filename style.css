@@ -75,29 +75,6 @@ body.dark {
     margin-top: 10px;
 }
 
-/* CAPTCHA */
-.captcha-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-}
-
-#captchaText {
-    padding: 10px 15px;
-    background: #020617;
-    color: #22c55e;
-    border-radius: 6px;
-    letter-spacing: 4px;
-    font-weight: bold;
-}
-
-.captcha-container button {
-    background: #334155;
-    color: white;
-    width: 45px;
-}
-
 /* =========================================
    TOP BAR
 ========================================= */
@@ -126,18 +103,20 @@ body.dark {
 }
 
 /* =========================================
-   TAB NAVIGATION
+   TAB NAVIGATION (FIXED)
 ========================================= */
 
-.tab-bar {
+.tab-buttons {
     display: flex;
     justify-content: center;
+    gap: 10px;
     background: #020617;
     border-bottom: 1px solid #334155;
+    padding: 10px 0;
 }
 
-.tab-bar button {
-    padding: 14px 18px;
+.tab-buttons button {
+    padding: 12px 18px;
     background: none;
     border: none;
     color: #94a3b8;
@@ -145,10 +124,8 @@ body.dark {
     font-size: 15px;
 }
 
-.tab-bar button:hover,
-.tab-bar button.active {
+.tab-buttons button:hover {
     color: #1abc9c;
-    border-bottom: 2px solid #1abc9c;
 }
 
 /* =========================================
@@ -234,11 +211,8 @@ body:not(.dark) .card {
     color: #020617;
 }
 
-body:not(.dark) .top-bar {
-    background: #e2e8f0;
-}
-
-body:not(.dark) .tab-bar {
+body:not(.dark) .top-bar,
+body:not(.dark) .tab-buttons {
     background: #e2e8f0;
 }
 
