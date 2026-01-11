@@ -1,97 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Smart P2P Microgrid Dashboard</title>
+/************************************************
+ SMART P2P MICROGRID – DATA LAYER
+ (Simulated Backend for Expo Demo)
+************************************************/
 
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1abc9c">
+/* ============================================
+ HOUSE ENERGY DATA
+ Used in: Overview + Surplus/Deficit tabs
+============================================ */
+const houses = [
+    {
+        id: 1,
+        energyProduced: 18,
+        energyConsumed: 10,
+        credits: 116
+    },
+    {
+        id: 2,
+        energyProduced: 6,
+        energyConsumed: 14,
+        credits: 84
+    },
+    {
+        id: 3,
+        energyProduced: 12,
+        energyConsumed: 9,
+        credits: 100
+    }
+];
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body class="dark">
-
-<!-- ================= LOGIN PAGE ================= -->
-<section id="loginPage" class="login-box">
-    <h1>🔐 Smart Microgrid Secure Login</h1>
-
-    <input id="username" type="text" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-
-    <button onclick="login()">Login</button>
-
-    <p id="loginError" class="error-text"></p>
-    <p class="demo-note">Demo Login: <b>solar / 6169</b></p>
-</section>
-
-<!-- ================= DASHBOARD ================= -->
-<section id="dashboard" style="display:none;">
-
-    <!-- TOP BAR -->
-    <header class="top-bar">
-        <h1>🌞 Smart P2P Solar Microgrid</h1>
-        <div class="top-actions">
-            <button onclick="toggleTheme()">🌙 / ☀️</button>
-            <button onclick="logout()">Logout</button>
-        </div>
-    </header>
-
-    <!-- TAB NAVIGATION -->
-    <nav class="tab-buttons">
-        <button onclick="showTab('overview')">Overview</button>
-        <button onclick="showTab('surplus')">Surplus / Deficit</button>
-        <button onclick="showTab('trading')">P2P Trading</button>
-        <button onclick="showTab('mesh')">Mesh Network</button>
-        <button onclick="showTab('ai')">AI Prediction</button>
-    </nav>
-
-    <!-- ================= TAB CONTENT ================= -->
-
-    <!-- OVERVIEW TAB -->
-    <main id="overview" class="tab-content">
-        <h2>📌 System Overview</h2>
-        <div id="overviewCards" class="card-container"></div>
-    </main>
-
-    <!-- SURPLUS TAB -->
-    <main id="surplus" class="tab-content">
-        <h2>⚡ Energy Surplus & Deficit</h2>
-        <div id="surplusData"></div>
-    </main>
-
-    <!-- TRADING TAB -->
-    <main id="trading" class="tab-content">
-        <h2>🔄 Peer-to-Peer Energy Trading</h2>
-        <p id="tradeStatus"></p>
-    </main>
-
-    <!-- MESH TAB -->
-    <main id="mesh" class="tab-content">
-        <h2>📡 Mesh Network Communication</h2>
-        <div id="meshData"></div>
-    </main>
-
-    <!-- AI TAB -->
-    <main id="ai" class="tab-content">
-        <h2>🤖 AI-Based Solar Energy Forecast</h2>
-        <div id="aiData"></div>
-    </main>
-
-</section>
-
-<!-- ================= SCRIPTS ================= -->
-<script src="data.js"></script>
-<script src="script.js"></script>
-
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
+/* Utility function */
+function getEnergyBalance(house) {
+    return house.energyProduced - house.energyConsumed;
 }
-</script>
 
-</body>
-</html>
+/* ============================================
+ P2P ENERGY TRADING DATA
+ Used in: Trading tab
+============================================ */
+const tradingInfo = {
+    status: "Trade Executed Successfully",
+    details: {
+        seller: "House 1",
+        buyer: "House 2",
+        energyTransferred: 8,   // kWh
+        creditsExchanged: 16
+    },
+    pricingModel: "2 Credits per kWh"
+};
+
+/* ============================================
+ MESH NETWORK DATA
+ Used in: Mesh Network tab
+============================================ */
+const meshNetwork = {
+    topology: "Fully Connected Mesh",
+    nodes: ["House 1", "House 2", "House 3"],
+    connections: [
+        "House 1 ↔ House 2",
+        "House 1 ↔ House 3",
+        "House 2 ↔ House 3"
+    ],
+    routing: {
+        algorithm: "Breadth First Search (BFS)",
+        activeRoute: "House 1 → House 3",
+        faultTolerance: "Enabled",
+        failedNode: "None"
+    }
+};
+
+/* ============================================
+ AI SOLAR ENERGY FORECAST DATA
+ Used in: AI Prediction tab
+============================================ */
+const aiForecast = [
+    {
+        house: "House 1",
+        today: 18.5,
+        tomorrow: 20.2,
+        confidence: "High"
+    },
+    {
+        house: "House 2",
+        today: 6.8,
+        tomorrow: 8.1,
+        confidence: "Medium"
+    },
+    {
+        house: "House 3",
+        today: 12.1,
+        tomorrow: 13.6,
+        confidence: "High"
+    }
+];
+
+/* ============================================
+ SYSTEM META INFORMATION
+ (Optional – for explanation)
+============================================ */
+const systemInfo = {
+    gridType: "Decentralized Microgrid",
+    energySource: "Solar PV",
+    tradingMechanism: "Peer-to-Peer Credit-Based",
+    communication: "Mesh Network",
+    aiModel: "Regression-based Solar Forecasting",
+    deployment: "Progressive Web App (PWA)",
+    lastUpdated: new Date().toLocaleString()
+};
 
