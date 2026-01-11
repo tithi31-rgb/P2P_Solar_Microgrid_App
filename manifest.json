@@ -1,7 +1,7 @@
 {
   "name": "Smart Decentralized Microgrid System",
   "short_name": "Smart Microgrid",
-  "description": "An AI-enabled peer-to-peer solar microgrid with decentralized energy trading, credit-based transactions, and resilient mesh network communication.",
+  "description": "An AI-enabled peer-to-peer solar microgrid dashboard featuring decentralized energy trading, credit-based transactions, mesh network communication, and solar energy forecasting.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",
