@@ -20,19 +20,14 @@
     <input id="username" placeholder="Username">
     <input id="password" type="password" placeholder="Password">
 
-    <!-- CAPTCHA -->
-    <div class="captcha-container">
-        <span id="captchaText"></span>
-        <button onclick="generateCaptcha()">↻</button>
-    </div>
-
-    <input id="captchaInput" placeholder="Enter Captcha">
-
-    <button onclick="login()">Login</button>
-
-    <p id="loginError" class="error-text"></p>
-    <p class="demo-note">Demo Login: <b>admin / admin123</b></p>
+    <!-- CAPTCHA SECTION -->
+<div class="captcha-container">
+    <span id="captchaText">AB12C</span>
+    <button onclick="generateCaptcha()" title="Refresh Captcha">↻</button>
 </div>
+
+<input id="captchaInput" placeholder="Enter Captcha">
+
 
 <!-- ================= DASHBOARD ================= -->
 <div id="dashboard" style="display:none;">
@@ -143,4 +138,5 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
