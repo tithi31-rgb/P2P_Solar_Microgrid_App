@@ -1,9 +1,59 @@
 {
-  "name": "P2P Solar Microgrid",
-  "short_name": "Microgrid",
-  "start_url": "index.html",
+  "name": "Smart Decentralized Microgrid System",
+  "short_name": "Smart Microgrid",
+  "description": "An AI-enabled peer-to-peer solar microgrid with decentralized energy trading, credit-based transactions, and resilient mesh network communication.",
+  "start_url": "./index.html",
   "display": "standalone",
+  "background_color": "#0f172a",
   "theme_color": "#1abc9c",
-  "background_color": "#141e30",
-  "orientation": "portrait"
+  "orientation": "portrait-primary",
+  "categories": [
+    "energy",
+    "education",
+    "technology",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
+
