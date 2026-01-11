@@ -10,40 +10,87 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="dark">
 
-<!-- LOGIN PAGE -->
+<!-- ================= LOGIN PAGE ================= -->
 <div id="loginPage" class="login-box">
-    <h1>🔐 Smart Microgrid</h1>
+    <h1>🔐 Smart Microgrid Secure Login</h1>
+
     <input id="username" placeholder="Username">
     <input id="password" type="password" placeholder="Password">
+
+    <!-- CAPTCHA -->
+    <div class="captcha-container">
+        <span id="captchaText"></span>
+        <button onclick="generateCaptcha()">↻</button>
+    </div>
+
+    <input id="captchaInput" placeholder="Enter Captcha">
+
     <button onclick="login()">Login</button>
-    <p id="loginError"></p>
+
+    <p id="loginError" class="error-text"></p>
+    <p class="demo-note">Demo Login: <b>admin / admin123</b></p>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ================= DASHBOARD ================= -->
 <div id="dashboard" style="display:none;">
 
+    <!-- TOP BAR -->
     <div class="top-bar">
-        <h1>🌞 P2P Solar Microgrid</h1>
+        <h1>🌞 Smart P2P Solar Microgrid Dashboard</h1>
         <div>
             <button onclick="toggleTheme()">🌙 / ☀️</button>
             <button onclick="logout()">Logout</button>
         </div>
     </div>
 
+    <!-- CREDIT STATUS -->
     <section>
-        <h2>💳 Credit Balance</h2>
+        <h2>💳 Credit Balance (Live)</h2>
         <div class="card-container" id="creditCards"></div>
     </section>
 
+    <!-- CREDIT GRAPH -->
     <section>
-        <h2>📊 Credit Distribution (Live)</h2>
+        <h2>📊 Credit Distribution</h2>
         <div id="creditBars"></div>
     </section>
 
+    <!-- AI SOLAR ENERGY PREDICTION -->
     <section>
-        <h2>🔄 P2P Trading Ledger</h2>
+        <h2>🤖 AI-Based Solar Energy Forecast</h2>
+        <table class="ai-table">
+            <tr>
+                <th>House</th>
+                <th>Today's Prediction (kWh)</th>
+                <th>Tomorrow's Prediction (kWh)</th>
+            </tr>
+            <tr>
+                <td>House 1</td>
+                <td id="ai-h1-today">18.5</td>
+                <td id="ai-h1-tomorrow">20.2</td>
+            </tr>
+            <tr>
+                <td>House 2</td>
+                <td id="ai-h2-today">6.8</td>
+                <td id="ai-h2-tomorrow">8.1</td>
+            </tr>
+            <tr>
+                <td>House 3</td>
+                <td id="ai-h3-today">12.1</td>
+                <td id="ai-h3-tomorrow">13.6</td>
+            </tr>
+        </table>
+        <p class="ai-note">
+            Predictions generated using historical solar data and regression-based ML model
+        </p>
+    </section>
+
+    <!-- P2P TRADING LEDGER -->
+    <section>
+        <h2>🔄 P2P Energy Trading Ledger</h2>
         <table>
             <tr>
                 <th>Seller</th>
@@ -60,17 +107,34 @@
         </table>
     </section>
 
+    <!-- MESH NETWORK STATUS -->
     <section>
-        <h2>📡 Mesh Network Status</h2>
-        <p id="networkStatus"></p>
+        <h2>📡 Mesh Network Communication</h2>
+
+        <p><b>Topology:</b> Fully Connected Mesh</p>
+
+        <ul class="mesh-list">
+            <li>House 1 ↔ House 2</li>
+            <li>House 1 ↔ House 3</li>
+            <li>House 2 ↔ House 3</li>
+        </ul>
+
+        <p id="networkStatus">
+            ✅ All nodes active | Shortest route: <b>House 1 → House 3</b>
+        </p>
+
+        <p class="mesh-note">
+            Routing implemented using BFS ensuring fault tolerance and low latency
+        </p>
     </section>
 
 </div>
 
+<!-- ================= SCRIPTS ================= -->
 <script src="data.js"></script>
 <script src="script.js"></script>
 
-<!-- SERVICE WORKER -->
+<!-- ================= SERVICE WORKER ================= -->
 <script>
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js');
@@ -79,3 +143,4 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
