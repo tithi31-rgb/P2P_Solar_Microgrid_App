@@ -15,10 +15,8 @@ const OFFLINE_FILES = [
 
 /* ================= INSTALL ================= */
 self.addEventListener("install", event => {
-    console.log("[ServiceWorker] Install");
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            console.log("[ServiceWorker] Caching app shell");
             return cache.addAll(OFFLINE_FILES);
         })
     );
@@ -27,13 +25,11 @@ self.addEventListener("install", event => {
 
 /* ================= ACTIVATE ================= */
 self.addEventListener("activate", event => {
-    console.log("[ServiceWorker] Activate");
     event.waitUntil(
         caches.keys().then(keys => {
             return Promise.all(
                 keys.map(key => {
                     if (key !== CACHE_NAME) {
-                        console.log("[ServiceWorker] Removing old cache:", key);
                         return caches.delete(key);
                     }
                 })
@@ -46,15 +42,8 @@ self.addEventListener("activate", event => {
 /* ================= FETCH ================= */
 self.addEventListener("fetch", event => {
     event.respondWith(
-        caches.match(event.request).then(cachedResponse => {
-            // Serve from cache if available
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-
-            // Otherwise fetch from network
-            return fetch(event.request).catch(() => {
-                // Offline fallback (for navigation)
+        caches.match(event.request).then(response => {
+            return response || fetch(event.request).catch(() => {
                 if (event.request.mode === "navigate") {
                     return caches.match("index.html");
                 }
