@@ -3,8 +3,8 @@
 ********************************/
 
 function login() {
-    const u = document.getElementById("username").value;
-    const p = document.getElementById("password").value;
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value.trim();
 
     if (!u || !p) {
         showError("⚠️ Please fill all fields");
@@ -15,8 +15,8 @@ function login() {
     if (u === "solar" && p === "6169") {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("dashboard").style.display = "block";
-        showTab("overview");
         document.getElementById("loginError").innerText = "";
+        showTab("overview"); // default tab
     } else {
         showError("❌ Invalid username or password");
     }
@@ -35,42 +35,53 @@ function showError(msg) {
  TAB SYSTEM
 ********************************/
 function showTab(tabId) {
-    document.querySelectorAll(".tab-content").forEach(t => {
-        t.style.display = "none";
+    // Hide all tabs
+    document.querySelectorAll(".tab-content").forEach(tab => {
+        tab.style.display = "none";
     });
 
+    // Show selected tab
     document.getElementById(tabId).style.display = "block";
 
-    if (tabId === "overview") loadOverview();
-    if (tabId === "surplus") loadSurplus();
-    if (tabId === "trading") loadTrading();
-    if (tabId === "mesh") loadMesh();
-    if (tabId === "ai") loadAI();
+    // Load data for selected tab
+    switch (tabId) {
+        case "overview":
+            loadOverview();
+            break;
+        case "surplus":
+            loadSurplus();
+            break;
+        case "trading":
+            loadTrading();
+            break;
+        case "mesh":
+            loadMesh();
+            break;
+        case "ai":
+            loadAI();
+            break;
+    }
 }
-
-/*******************************
- ENERGY DATA (SIMULATED)
-********************************/
-const houses = [
-    { id: 1, produced: 18, consumed: 10, credits: 116 },
-    { id: 2, produced: 6, consumed: 14, credits: 84 },
-    { id: 3, produced: 12, consumed: 9, credits: 100 }
-];
 
 /*******************************
  OVERVIEW TAB
 ********************************/
 function loadOverview() {
     let html = "";
+
     houses.forEach(h => {
-        const bal = h.produced - h.consumed;
+        const balance = h.energyProduced - h.energyConsumed;
         html += `
-        <div class="card">
-            <h3>House ${h.id}</h3>
-            <p>Energy Balance: <b>${bal} kWh</b></p>
-            <p>Credits: <b>${h.credits}</b></p>
-        </div>`;
+            <div class="card">
+                <h3>House ${h.id}</h3>
+                <p>Energy Produced: ${h.energyProduced} kWh</p>
+                <p>Energy Consumed: ${h.energyConsumed} kWh</p>
+                <p><b>Balance: ${balance} kWh</b></p>
+                <p>Credits: ${h.credits}</p>
+            </div>
+        `;
     });
+
     document.getElementById("overviewCards").innerHTML = html;
 }
 
@@ -79,13 +90,19 @@ function loadOverview() {
 ********************************/
 function loadSurplus() {
     let html = "<ul>";
+
     houses.forEach(h => {
-        const bal = h.produced - h.consumed;
-        html += `<li>
-            House ${h.id} → 
-            ${bal > 0 ? "🟢 Surplus +" + bal : "🔴 Deficit " + bal} kWh
-        </li>`;
+        const balance = h.energyProduced - h.energyConsumed;
+        html += `
+            <li>
+                House ${h.id} :
+                ${balance > 0
+                    ? "🟢 Surplus +" + balance + " kWh"
+                    : "🔴 Deficit " + balance + " kWh"}
+            </li>
+        `;
     });
+
     html += "</ul>";
     document.getElementById("surplusData").innerHTML = html;
 }
@@ -94,41 +111,74 @@ function loadSurplus() {
  P2P TRADING TAB
 ********************************/
 function loadTrading() {
-    document.getElementById("tradeStatus").innerText =
-        "House 1 transferred 8 kWh → House 2 (16 Credits)";
+    const t = tradingInfo.details;
+
+    document.getElementById("tradeStatus").innerHTML = `
+        <p><b>Status:</b> ${tradingInfo.status}</p>
+        <p><b>Seller:</b> ${t.seller}</p>
+        <p><b>Buyer:</b> ${t.buyer}</p>
+        <p><b>Energy Transferred:</b> ${t.energyTransferred} kWh</p>
+        <p><b>Credits Exchanged:</b> ${t.creditsExchanged}</p>
+        <p><b>Pricing Model:</b> ${tradingInfo.pricingModel}</p>
+    `;
 }
 
 /*******************************
  MESH NETWORK TAB
 ********************************/
 function loadMesh() {
-    document.getElementById("meshData").innerHTML = `
-        <p>📡 Active Nodes: House 1, House 2, House 3</p>
-        <p>🔁 Routing Algorithm: BFS</p>
-        <p>✅ Shortest Route: House 1 → House 3</p>
-        <p>🛡️ Fault Tolerant: YES</p>
+    let html = `
+        <p><b>Topology:</b> ${meshNetwork.topology}</p>
+        <p><b>Routing Algorithm:</b> ${meshNetwork.routing.algorithm}</p>
+        <p><b>Active Route:</b> ${meshNetwork.routing.activeRoute}</p>
+        <p><b>Fault Tolerance:</b> ${meshNetwork.routing.faultTolerance}</p>
+        <p><b>Failed Node:</b> ${meshNetwork.routing.failedNode}</p>
+        <ul>
     `;
+
+    meshNetwork.connections.forEach(link => {
+        html += `<li>${link}</li>`;
+    });
+
+    html += "</ul>";
+
+    document.getElementById("meshData").innerHTML = html;
 }
 
 /*******************************
  AI PREDICTION TAB
 ********************************/
 function loadAI() {
-    document.getElementById("aiData").innerHTML = `
+    let html = `
         <table>
-            <tr><th>House</th><th>Today</th><th>Tomorrow</th></tr>
-            <tr><td>1</td><td>18.5</td><td>20.2</td></tr>
-            <tr><td>2</td><td>6.8</td><td>8.1</td></tr>
-            <tr><td>3</td><td>12.1</td><td>13.6</td></tr>
-        </table>
-        <p>Model: Regression-based ML using historical solar data</p>
+            <tr>
+                <th>House</th>
+                <th>Today (kWh)</th>
+                <th>Tomorrow (kWh)</th>
+                <th>Confidence</th>
+            </tr>
     `;
+
+    aiForecast.forEach(p => {
+        html += `
+            <tr>
+                <td>${p.house}</td>
+                <td>${p.today}</td>
+                <td>${p.tomorrow}</td>
+                <td>${p.confidence}</td>
+            </tr>
+        `;
+    });
+
+    html += "</table>";
+
+    document.getElementById("aiData").innerHTML = html;
 }
 
 /*******************************
- THEME
+ THEME TOGGLE
 ********************************/
 function toggleTheme() {
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
 }
 
