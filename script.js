@@ -25,7 +25,7 @@ function login() {
         return;
     }
 
-    if (u === "admin" && p === "admin123") {
+    if (u === "solar" && p === "6169") {
         loginPage.style.display = "none";
         dashboard.style.display = "block";
         showTab("overview");
@@ -160,4 +160,5 @@ function toggleTheme() {
  INIT
 ********************************/
 window.onload = generateCaptcha;
+
 
