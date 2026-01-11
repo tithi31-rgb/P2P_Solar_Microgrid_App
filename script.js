@@ -1,48 +1,34 @@
 /*******************************
- BASIC AUTH + CAPTCHA
+ BASIC AUTH (NO CAPTCHA)
 ********************************/
-let generatedCaptcha = "";
-
-function generateCaptcha() {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    generatedCaptcha = "";
-    for (let i = 0; i < 5; i++) {
-        generatedCaptcha += chars[Math.floor(Math.random() * chars.length)];
-    }
-    document.getElementById("captchaText").innerText = generatedCaptcha;
-}
 
 function login() {
-    const u = username.value;
-    const p = password.value;
-    const c = captchaInput.value;
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
 
-    if (!u || !p || !c) return showError("⚠️ Fill all fields");
-
-    if (c !== generatedCaptcha) {
-        showError("❌ Captcha mismatch");
-        generateCaptcha();
+    if (!u || !p) {
+        showError("⚠️ Please fill all fields");
         return;
     }
 
+    // DEMO CREDENTIALS
     if (u === "solar" && p === "6169") {
-        loginPage.style.display = "none";
-        dashboard.style.display = "block";
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
         showTab("overview");
+        document.getElementById("loginError").innerText = "";
     } else {
-        showError("❌ Invalid credentials");
-        generateCaptcha();
+        showError("❌ Invalid username or password");
     }
 }
 
 function logout() {
-    dashboard.style.display = "none";
-    loginPage.style.display = "block";
-    generateCaptcha();
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginPage").style.display = "block";
 }
 
 function showError(msg) {
-    loginError.innerText = msg;
+    document.getElementById("loginError").innerText = msg;
 }
 
 /*******************************
@@ -52,7 +38,14 @@ function showTab(tabId) {
     document.querySelectorAll(".tab-content").forEach(t => {
         t.style.display = "none";
     });
+
     document.getElementById(tabId).style.display = "block";
+
+    if (tabId === "overview") loadOverview();
+    if (tabId === "surplus") loadSurplus();
+    if (tabId === "trading") loadTrading();
+    if (tabId === "mesh") loadMesh();
+    if (tabId === "ai") loadAI();
 }
 
 /*******************************
@@ -133,32 +126,9 @@ function loadAI() {
 }
 
 /*******************************
- TAB LOAD DISPATCHER
-********************************/
-function showTab(tab) {
-    document.querySelectorAll(".tab-content").forEach(
-        t => t.style.display = "none"
-    );
-
-    document.getElementById(tab).style.display = "block";
-
-    if (tab === "overview") loadOverview();
-    if (tab === "surplus") loadSurplus();
-    if (tab === "trading") loadTrading();
-    if (tab === "mesh") loadMesh();
-    if (tab === "ai") loadAI();
-}
-
-/*******************************
  THEME
 ********************************/
 function toggleTheme() {
     document.body.classList.toggle("dark");
 }
-
-/*******************************
- INIT
-********************************/
-window.onload = generateCaptcha;
-
 
